@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Media Agent - Get 30 Posts in 2 Minutes</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --primary: #7c6dfa;
+            --secondary: #a78bfa;
+            --bg: #0a0a0f;
+            --surface: #12121a;
+            --text: #e8e6f0;
+            --muted: #9896a8;
+            --green: #34d399;
+            --accent: #fbbf24;
+        }
+        
+        body {
+            font-family: 'Syne', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, var(--bg) 0%, #1a1a26 100%);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        
+        header {
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            position: sticky;
+            top: 0;
+            background: rgba(10,10,15,0.8);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo { font-size: 20px; font-weight: 700; color: var(--secondary); }
+        
+        nav a {
+            color: var(--text);
+            text-decoration: none;
+            margin: 0 20px;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover { color: var(--secondary); }
+        
+        .btn {
+            padding: 12px 28px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(124,109,250,0.3);
+        }
+        
+        .hero {
+            padding: 100px 0 80px;
+            text-align: center;
+        }
+        
+        .hero-tag {
+            display: inline-block;
+            background: rgba(124,109,250,0.1);
+            border: 1px solid rgba(124,109,250,0.3);
+            color: var(--secondary);
+            padding: 8px 16px;
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 20px;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+        
+        .hero h1 span { color: var(--secondary); }
+        
+        .hero-desc {
+            font-size: 1.2rem;
+            color: var(--muted);
+            max-width: 600px;
+            margin: 0 auto 40px;
+            line-height: 1.8;
+        }
+        
+        .hero-cta {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 60px;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 80px;
+            padding: 60px 0;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--secondary);
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+        
+        .features {
+            padding: 100px 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+        
+        .feature {
+            background: var(--surface);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 40px;
+            transition: all 0.3s;
+        }
+        
+        .feature:hover {
+            border-color: rgba(124,109,250,0.3);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(124,109,250,0.1);
+        }
+        
+        .feature-icon {
+            font-size: 40px;
+            margin-bottom: 20px;
+        }
+        
+        .feature h3 {
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+            color: #fff;
+        }
+        
+        .feature p {
+            color: var(--muted);
+            line-height: 1.7;
+        }
+        
+        .pricing {
+            padding: 100px 0;
+            text-align: center;
+        }
+        
+        .pricing h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+        
+        .pricing-desc {
+            font-size: 1.1rem;
+            color: var(--muted);
+            margin-bottom: 60px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .price-card {
+            background: var(--surface);
+            border: 2px solid rgba(124,109,250,0.3);
+            border-radius: 12px;
+            padding: 40px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        .price {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--secondary);
+            margin: 20px 0;
+        }
+        
+        .price-desc {
+            color: var(--muted);
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        
+        .price-features {
+            text-align: left;
+            margin: 30px 0;
+            list-style: none;
+        }
+        
+        .price-features li {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            font-size: 14px;
+            color: var(--text);
+        }
+        
+        .price-features li:before {
+            content: "✓ ";
+            color: var(--green);
+            font-weight: 600;
+            margin-right: 10px;
+        }
+        
+        .cta-section {
+            background: linear-gradient(135deg, rgba(124,109,250,0.1) 0%, rgba(167,139,250,0.05) 100%);
+            border: 1px solid rgba(124,109,250,0.2);
+            border-radius: 16px;
+            padding: 60px 40px;
+            text-align: center;
+            margin: 100px 0;
+        }
+        
+        .cta-section h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+        
+        .cta-section p {
+            font-size: 1.1rem;
+            color: var(--muted);
+            margin-bottom: 30px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        footer {
+            border-top: 1px solid rgba(255,255,255,0.08);
+            padding: 40px 0;
+            text-align: center;
+            color: var(--muted);
+            font-size: 14px;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .hero-cta { flex-direction: column; }
+            nav { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">🤖 Social Media Agent</div>
+                <nav>
+                    <a href="#features">Features</a>
+                    <a href="#pricing">Pricing</a>
+                    <a href="#faq">FAQ</a>
+                </nav>
+                <a href="https://razorpay.com/your-payment-link" class="btn btn-primary">Get Started</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <div class="hero-tag">⚡ AI-Powered Social Media</div>
+                <h1>30 Days of <span>Social Posts</span><br>in 2 Minutes</h1>
+                <p class="hero-desc">
+                    Stop wasting hours on content creation. Our AI agent generates a complete month of 
+                    professional, on-brand social media posts instantly. Ready to post.
+                </p>
+                <div class="hero-cta">
+                    <a href="https://razorpay.com/your-payment-link" class="btn btn-primary">Start Free Trial</a>
+                    <button class="btn" style="background: transparent; border: 1px solid var(--primary); color: var(--primary);">Watch Demo</button>
+                </div>
+                
+                <div class="stats">
+                    <div class="stat">
+                        <div class="stat-number">30</div>
+                        <div class="stat-label">Unique Posts</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">2 min</div>
+                        <div class="stat-label">Setup Time</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">Customizable</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">₹999</div>
+                        <div class="stat-label">Per Month</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="container">
+            <div style="text-align: center; margin-bottom: 60px;">
+                <h2 style="font-size: 2.2rem; margin-bottom: 15px;">How It Works</h2>
+                <p style="font-size: 1.1rem; color: var(--muted); max-width: 500px; margin: 0 auto;">
+                    Three simple steps to automated content success
+                </p>
+            </div>
+            
+            <div class="features">
+                <div class="feature">
+                    <div class="feature-icon">📋</div>
+                    <h3>1. Tell Us About Your Business</h3>
+                    <p>Fill out a quick form: industry, target audience, brand tone, and key topics. Takes 2 minutes.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🤖</div>
+                    <h3>2. AI Generates Your Content</h3>
+                    <p>Our Claude-powered agent creates 30 unique, varied posts with captions, hashtags, and CTAs.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">📱</div>
+                    <h3>3. Download & Share</h3>
+                    <p>Get a beautiful PDF or Google Doc. Copy-paste directly to Instagram, LinkedIn, or any scheduler.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="pricing" class="pricing">
+            <div class="container">
+                <h2>Simple, Transparent Pricing</h2>
+                <p class="pricing-desc">
+                    One flat rate. No hidden fees. Cancel anytime.
+                </p>
+                
+                <div class="price-card">
+                    <h3 style="font-size: 1.5rem;">Monthly Plan</h3>
+                    <div class="price">₹999</div>
+                    <p class="price-desc">/month • unlimited clients</p>
+                    
+                    <ul class="price-features">
+                        <li>Unlimited 30-day content calendars</li>
+                        <li>Multiple social platforms (IG, LinkedIn, Twitter)</li>
+                        <li>Custom brand voice & tone</li>
+                        <li>Revisions included</li>
+                        <li>Email delivery to your clients</li>
+                        <li>Priority support</li>
+                    </ul>
+                    
+                    <a href="https://razorpay.com/your-payment-link" class="btn btn-primary" style="width: 100%;">Subscribe Now</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section container">
+            <h2>Ready to 10x Your Client's Social Presence?</h2>
+            <p>Join other agencies and freelancers already using the Social Media Agent to deliver better results faster.</p>
+            <a href="https://razorpay.com/your-payment-link" class="btn btn-primary">Get Started - ₹999/month</a>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Social Media Agent. Built for creators, by creators.</p>
+        </div>
+    </footer>
+</body>
+</html>
