@@ -61,9 +61,6 @@ npm install
 npm run dev
 ```
 
-## 📸 Screenshots
-
-See [SCREENSHOTS.md](SCREENSHOTS.md) for a full gallery of the application pages.
 
 ## 📄 License
 
